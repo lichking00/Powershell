@@ -21,7 +21,7 @@ foreach ($user in $users)
     $usagelocation=$user.usagelocation 
     $SKU=$user.SKU
     Set-MsolUser -UserPrincipalName $upn -UsageLocation $usagelocation
-    Set-MsolUserLicense -UserPrincipalName $upn -AddLicenses “AccountSkuId”, "AccountSkuId" -LicenseOptions $Options
+    Set-MsolUserLicense -UserPrincipalName $upn -AddLicenses “AccountSkuId1”, "AccountSkuId2" -LicenseOptions $Options
     
 } 
 
