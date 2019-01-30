@@ -1,35 +1,28 @@
-#Office 365 Powershell Modules
 import-module MSOnline
 
-#Credential to connect to MSonline
 Connect-MSOLService 
 
-#Command to get your AccountSkuId 
+#How to get the SKuID
 #Get-MsolAccountSku
 
-# $ServicePlan = Get-MsolAccountSku | Where {$_.SkuPartNumber -eq “AccountSkuId"} <<<< just for checking the services for SkuID
-# $ServicePlan.ServiceStatus <<<< service run command
+#for checking the services for SkuID
+#$ServicePlan = Get-MsolAccountSku | Where {$_.SkuPartNumber -eq “SkuID”}
+#$ServicePlan.ServiceStatus <<<< service run command
 
-$Options = New-MsolLicenseOptions -AccountSkuId "AccountSkuId" -DisabledPlans  "Service1", "Service2", "Service3"
+$Options = New-MsolLicenseOptions -AccountSkuId “SkuID” -DisabledPlans  "Service1", "Service2", "Service3"
 
 $users = import-csv "Path to CSV" -delimiter ","
 
-#Add license set with option
+#Remove license set with option
 foreach ($user in $users)
-{
-    $upn=$user.UserPrincipalName
-    $usagelocation=$user.usagelocation 
-    $SKU=$user.SKU
-    Set-MsolUser -UserPrincipalName $upn -UsageLocation $usagelocation
-    Set-MsolUserLicense -UserPrincipalName $upn -AddLicenses “AccountSkuId1”, "AccountSkuId2" -LicenseOptions $Options
-    
-} 
 
-#Remove license set with option (Probably can just use last line on the same add function)
-foreach ($user in $users)
 {
     $upn=$user.UserPrincipalName
     $usagelocation=$user.usagelocation 
     $SKU=$user.SKU
     Set-MsolUser -UserPrincipalName $upn -UsageLocation $usagelocation
-    Set-MsolUserLicense -UserPrincipalName $upn -RemoveLicenses “AccountSkuId” 
+    Set-MsolUserLicense -UserPrincipalName $upn -RemoveLicenses “SkuID”
+    Set-MsolUserLicense -UserPrincipalName $upn -AddLicenses “SkuID” -LicenseOptions $Options
+    Set-MsolUserLicense -UserPrincipalName $upn -AddLicenses “SkuID”
+
+    }
